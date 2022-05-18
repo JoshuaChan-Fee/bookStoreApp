@@ -1,4 +1,7 @@
-class Api::V1::BookInventoryController < ActionController::API
+class Api::V1::BookInventoryController < SecuredController
+  include ActionController::HttpAuthentication::Token
+  skip_before_action :authorize_request, only: [:index, :show]
+
   def index
     @books = Book.all
     render json: @books
