@@ -1,13 +1,16 @@
 class StoresController < ApplicationController
+  protect_from_forgery with: :null_session
   before_action :set_store, only: %i[ show edit update destroy ]
 
   # GET /stores or /stores.json
   def index
     @stores = Store.all
+    @store = Store.new
   end
 
   # GET /stores/1 or /stores/1.json
   def show
+    @books = @store.books.all
   end
 
   # GET /stores/new
@@ -25,9 +28,10 @@ class StoresController < ApplicationController
 
     respond_to do |format|
       if @store.save
-        format.html { redirect_to store_url(@store), notice: "Store was successfully created." }
+        format.html { redirect_to stores_path, notice: "Store was successfully created." }
         format.json { render :show, status: :created, location: @store }
       else
+        format.turbo_stream { render :show, status: :created, location: @store }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @store.errors, status: :unprocessable_entity }
       end

@@ -1,9 +1,11 @@
 class BooksController < ApplicationController
+  protect_from_forgery with: :null_session
   before_action :set_book, only: %i[ show edit update destroy ]
 
   # GET /books or /books.json
   def index
     @books = Book.all
+    @book = Book.new
   end
 
   # GET /books/1 or /books/1.json
@@ -28,6 +30,7 @@ class BooksController < ApplicationController
         format.html { redirect_to book_url(@book), notice: "Book was successfully created." }
         format.json { render :show, status: :created, location: @book }
       else
+        format.turbo_stream { render :show, status: :created, location: @book }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @book.errors, status: :unprocessable_entity }
       end
