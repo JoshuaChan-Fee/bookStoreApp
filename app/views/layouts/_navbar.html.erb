@@ -1,5 +1,18 @@
-<header>
-	<div class='container'>
-		<span><%= link_to "Book Stores", stores_path %> / <%= link_to "Book Library", books_path %></span>
-	</div>
-</header>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <%= link_to 'Book Store App', root_path, class:"navbar-brand" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+            <%= link_to "Book Stores", stores_path, class:"nav-link active" %>
+        </li>
+        <li class="nav-item">
+            <%= link_to "Book Library", books_path, class:"nav-link"%>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

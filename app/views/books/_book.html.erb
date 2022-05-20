@@ -1,11 +1,10 @@
 <%= turbo_frame_tag dom_id(book) do %>
     <tr>
-        <td><%= book.name %></td>
+        <td><%= link_to book.name, book, class: "list" %></td>
         <td><%= book.stock %></td>
         <td><%= book.status %></td>
-        <td><%= book.store_id %></td>
-        <td><%= link_to 'Show', book %></td>
-        <td><%= link_to 'Edit', edit_book_path(book) %></td>
-        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= book.store.name %></td>
+        <td><%= link_to 'Edit', edit_book_path(book), class:"btn btn-warning" %></td>
+        <td><%= link_to 'Destroy', book, method: :delete, class:"btn btn-danger" %></td>
     </tr>
 <% end %>

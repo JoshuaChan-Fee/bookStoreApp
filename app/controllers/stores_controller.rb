@@ -4,13 +4,13 @@ class StoresController < ApplicationController
 
   # GET /stores or /stores.json
   def index
-    @stores = Store.all
+    @stores = Store.order(:name)
     @store = Store.new
   end
 
   # GET /stores/1 or /stores/1.json
   def show
-    @books = @store.books.all
+    @books = @store.books.order(:name)
   end
 
   # GET /stores/new
@@ -28,7 +28,7 @@ class StoresController < ApplicationController
 
     respond_to do |format|
       if @store.save
-        format.html { redirect_to stores_path, notice: "Store was successfully created." }
+        format.html { redirect_to stores_path, notice: "Store #{@store.name} was successfully created." }
         format.json { render :show, status: :created, location: @store }
       else
         format.turbo_stream { render :show, status: :created, location: @store }
@@ -42,7 +42,7 @@ class StoresController < ApplicationController
   def update
     respond_to do |format|
       if @store.update(store_params)
-        format.html { redirect_to store_url(@store), notice: "Store was successfully updated." }
+        format.html { redirect_to store_url(@store), notice: "Store #{@store.name} was successfully updated." }
         format.json { render :show, status: :ok, location: @store }
       else
         format.html { render :edit, status: :unprocessable_entity }
