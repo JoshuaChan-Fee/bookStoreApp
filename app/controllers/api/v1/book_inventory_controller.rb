@@ -1,5 +1,6 @@
-class Api::V1::BookInventoryController < SecuredController
+class Api::V1::BookInventoryController < ActionController::API
   include ActionController::HttpAuthentication::Token
+  before_action :authorize_request
   skip_before_action :authorize_request, only: [:index, :show]
 
   def index
@@ -54,4 +55,9 @@ class Api::V1::BookInventoryController < SecuredController
       params.permit(:name, :stock, :status, :store_id)
     end
 
+    def authorize_request
+      AuthorizationService.new(request.headers).authenticate_request!
+    rescue JWT::VerificationError, JWT::DecodeError
+      render json: { errors: ['Not Authenticated'] }, status: :unauthorized
+    end
 end
